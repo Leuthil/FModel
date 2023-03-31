@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Linq;
 using FModel.Framework;
 using FModel.Services;
@@ -44,6 +44,13 @@ public class RightClickMenuCommand : ViewModelCommand<ApplicationViewModel>
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         contextViewModel.CUE4Parse.Extract(cancellationToken, asset.FullPath, false, EBulkType.Properties | EBulkType.Auto);
+                    }
+                    break;
+                case "Assets_Save_Properties_UEAssetToolkit":
+                    foreach (var asset in assetItems)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        contextViewModel.CUE4Parse.Extract(cancellationToken, asset.FullPath, false, EBulkType.UEAssetToolkit);
                     }
                     break;
                 case "Assets_Save_Textures":

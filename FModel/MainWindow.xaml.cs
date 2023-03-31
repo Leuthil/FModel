@@ -187,6 +187,14 @@ public partial class MainWindow
         }
     }
 
+    private async void OnFolderSaveClick_UEAssetToolkit(object sender, RoutedEventArgs e)
+    {
+        if (AssetsFolderName.SelectedItem is TreeItem folder)
+        {
+            await _threadWorkerView.Begin(cancellationToken => { _applicationView.CUE4Parse.SaveFolder_UEAssetToolkit(cancellationToken, folder); });
+        }
+    }
+
     private async void OnFolderTextureClick(object sender, RoutedEventArgs e)
     {
         if (AssetsFolderName.SelectedItem is TreeItem folder)

@@ -543,6 +543,9 @@ public class CUE4ParseViewModel : ViewModel
     public void SaveFolder(CancellationToken cancellationToken, TreeItem folder)
         => BulkFolder(cancellationToken, folder, asset => Extract(cancellationToken, asset.FullPath, TabControl.HasNoTabs, EBulkType.Properties | EBulkType.Auto));
 
+    public void SaveFolder_UEAssetToolkit(CancellationToken cancellationToken, TreeItem folder)
+        => BulkFolder(cancellationToken, folder, asset => Extract(cancellationToken, asset.FullPath, TabControl.HasNoTabs, EBulkType.UEAssetToolkit));
+
     public void TextureFolder(CancellationToken cancellationToken, TreeItem folder)
         => BulkFolder(cancellationToken, folder, asset => Extract(cancellationToken, asset.FullPath, TabControl.HasNoTabs, EBulkType.Textures | EBulkType.Auto));
 
@@ -572,6 +575,7 @@ public class CUE4ParseViewModel : ViewModel
 
         var autoProperties = bulk == (EBulkType.Properties | EBulkType.Auto);
         var autoTextures = bulk == (EBulkType.Textures | EBulkType.Auto);
+        var isUEAssetToolkitExport = bulk == EBulkType.UEAssetToolkit;
         TabControl.SelectedTab.ClearImages();
         TabControl.SelectedTab.ResetDocumentText();
         TabControl.SelectedTab.ScrollTrigger = null;
@@ -582,8 +586,17 @@ public class CUE4ParseViewModel : ViewModel
             case "umap":
             {
                 var exports = Provider.LoadObjectExports(fullPath); // cancellationToken
-                TabControl.SelectedTab.SetDocumentText(JsonConvert.SerializeObject(exports, Formatting.Indented), autoProperties);
-                if (HasFlag(bulk, EBulkType.Properties)) break; // do not search for viewable exports if we are dealing with jsons
+                if (isUEAssetToolkitExport)
+                {
+                    // TODO: Convert "exports" to UEAssetToolkit format
+                    var exportsForUEAssetToolkit = exports;
+                    TabControl.SelectedTab.SetDocumentText(JsonConvert.SerializeObject(exportsForUEAssetToolkit, Formatting.Indented), true);
+                }
+                else
+                {
+                    TabControl.SelectedTab.SetDocumentText(JsonConvert.SerializeObject(exports, Formatting.Indented), autoProperties);
+                }
+                if (HasFlag(bulk, EBulkType.Properties) || HasFlag(bulk, EBulkType.UEAssetToolkit)) break; // do not search for viewable exports if we are dealing with jsons
 
                 foreach (var e in exports)
                 {
