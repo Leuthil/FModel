@@ -590,7 +590,9 @@ public class CUE4ParseViewModel : ViewModel
                 {
                     // TODO: Convert "exports" to UEAssetToolkit format
                     var exportsForUEAssetToolkit = exports;
-                    TabControl.SelectedTab.SetDocumentText(JsonConvert.SerializeObject(exportsForUEAssetToolkit, Formatting.Indented), true);
+                    var uasset = CUE4Parse2UEAT.Generation.UAssetUtils.CreateUAsset((CUE4Parse.UE4.Assets.IoPackage) Provider.LoadPackage(fullPath));
+
+                    TabControl.SelectedTab.SetDocumentText(uasset.Serialize(), true);
                 }
                 else
                 {
