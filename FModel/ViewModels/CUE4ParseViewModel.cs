@@ -588,7 +588,7 @@ public class CUE4ParseViewModel : ViewModel
                 if (isUEAssetToolkitExport)
                 {
                     var package = Provider.LoadPackage(fullPath);
-                    var uasset = CUE4Parse2UEAT.Generation.UAssetUtils.CreateUAsset(package as CUE4Parse.UE4.Assets.IoPackage);
+                    var uasset = CUE4Parse2UEAT.Generation.UAssetUtils.CreateUAsset(package);
 
                     if (uasset != null)
                     {
