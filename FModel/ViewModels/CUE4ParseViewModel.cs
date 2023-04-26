@@ -585,19 +585,27 @@ public class CUE4ParseViewModel : ViewModel
             case "uasset":
             case "umap":
             {
-                var exports = Provider.LoadObjectExports(fullPath); // cancellationToken
                 if (isUEAssetToolkitExport)
                 {
-                    // TODO: Convert "exports" to UEAssetToolkit format
-                    var exportsForUEAssetToolkit = exports;
-                    var uasset = CUE4Parse2UEAT.Generation.UAssetUtils.CreateUAsset((CUE4Parse.UE4.Assets.IoPackage) Provider.LoadPackage(fullPath));
+                    var package = Provider.LoadPackage(fullPath);
+                    var uasset = CUE4Parse2UEAT.Generation.UAssetUtils.CreateUAsset(package as CUE4Parse.UE4.Assets.IoPackage);
 
-                    TabControl.SelectedTab.SetDocumentText(uasset.Serialize(), true);
+                    if (uasset != null)
+                    {
+                        TabControl.SelectedTab.SetDocumentText(uasset.Serialize(), true);
+                    }
+                    else
+                    {
+                        TabControl.SelectedTab.SetDocumentText("Could not serialize to UEAssetToolkit format", false);
+                    }
+
+                    break;
                 }
-                else
-                {
-                    TabControl.SelectedTab.SetDocumentText(JsonConvert.SerializeObject(exports, Formatting.Indented), autoProperties);
-                }
+
+                var exports = Provider.LoadObjectExports(fullPath); // cancellationToken
+
+                TabControl.SelectedTab.SetDocumentText(JsonConvert.SerializeObject(exports, Formatting.Indented), autoProperties);
+
                 if (HasFlag(bulk, EBulkType.Properties) || HasFlag(bulk, EBulkType.UEAssetToolkit)) break; // do not search for viewable exports if we are dealing with jsons
 
                 foreach (var e in exports)
