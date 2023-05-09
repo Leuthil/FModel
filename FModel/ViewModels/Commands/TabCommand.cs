@@ -43,7 +43,7 @@ public class TabCommand : ViewModelCommand<TabItem>
             case "Asset_Save_Properties_UEAssetToolkit":
                 await _threadWorkerView.Begin(cancellationToken =>
                 {
-                    _applicationView.CUE4Parse.Extract(cancellationToken, contextViewModel.FullPath, false, EBulkType.UEAssetToolkit);
+                    _applicationView.CUE4Parse.Extract(cancellationToken, contextViewModel.FullPath, false, EBulkType.UEAssetToolkit | EBulkType.Auto);
                 });
                 break;
             case "Asset_Save_Textures":

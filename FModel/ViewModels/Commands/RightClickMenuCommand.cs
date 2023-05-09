@@ -50,7 +50,7 @@ public class RightClickMenuCommand : ViewModelCommand<ApplicationViewModel>
                     foreach (var asset in assetItems)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        contextViewModel.CUE4Parse.Extract(cancellationToken, asset.FullPath, false, EBulkType.UEAssetToolkit);
+                        contextViewModel.CUE4Parse.Extract(cancellationToken, asset.FullPath, false, EBulkType.UEAssetToolkit | EBulkType.Auto);
                     }
                     break;
                 case "Assets_Save_Textures":
