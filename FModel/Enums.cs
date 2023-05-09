@@ -157,11 +157,12 @@ public enum EEndpointType
 [Flags]
 public enum EBulkType
 {
-    None =          0,
-    Auto =          1 << 0,
-    Properties =    1 << 1,
-    Textures =      1 << 2,
-    Meshes =        1 << 3,
-    Skeletons =     1 << 4,
-    Animations =    1 << 5
+    None =              0,
+    Auto =              1 << 0,
+    Properties =        1 << 1,
+    Textures =          1 << 2,
+    Meshes =            1 << 3,
+    Skeletons =         1 << 4,
+    Animations =        1 << 5,
+    UEAssetToolkit =    1 << 6,
 }
