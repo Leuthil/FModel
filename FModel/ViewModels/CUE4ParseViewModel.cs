@@ -544,7 +544,7 @@ public class CUE4ParseViewModel : ViewModel
         => BulkFolder(cancellationToken, folder, asset => Extract(cancellationToken, asset.FullPath, TabControl.HasNoTabs, EBulkType.Properties | EBulkType.Auto));
 
     public void SaveFolder_UEAssetToolkit(CancellationToken cancellationToken, TreeItem folder)
-        => BulkFolder(cancellationToken, folder, asset => Extract(cancellationToken, asset.FullPath, TabControl.HasNoTabs, EBulkType.UEAssetToolkit));
+        => BulkFolder(cancellationToken, folder, asset => Extract(cancellationToken, asset.FullPath, TabControl.HasNoTabs, EBulkType.UEAssetToolkit | EBulkType.Auto));
 
     public void TextureFolder(CancellationToken cancellationToken, TreeItem folder)
         => BulkFolder(cancellationToken, folder, asset => Extract(cancellationToken, asset.FullPath, TabControl.HasNoTabs, EBulkType.Textures | EBulkType.Auto));
@@ -575,7 +575,7 @@ public class CUE4ParseViewModel : ViewModel
 
         var autoProperties = bulk == (EBulkType.Properties | EBulkType.Auto);
         var autoTextures = bulk == (EBulkType.Textures | EBulkType.Auto);
-        var isUEAssetToolkitExport = bulk == EBulkType.UEAssetToolkit;
+        var autoUEAssetToolkit = bulk == (EBulkType.UEAssetToolkit | EBulkType.Auto);
         TabControl.SelectedTab.ClearImages();
         TabControl.SelectedTab.ResetDocumentText();
         TabControl.SelectedTab.ScrollTrigger = null;
@@ -585,7 +585,7 @@ public class CUE4ParseViewModel : ViewModel
             case "uasset":
             case "umap":
             {
-                if (isUEAssetToolkitExport)
+                if (autoUEAssetToolkit)
                 {
                     var package = Provider.LoadPackage(fullPath);
                     var uasset = CUE4Parse2UEAT.Generation.UAssetUtils.CreateUAsset(package);
