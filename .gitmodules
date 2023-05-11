@@ -1,7 +1,7 @@
 [submodule "CUE4Parse"]
 	path = CUE4Parse
-	url = https://github.com/LongerWarrior/CUE4Parse
-	branch = HogwartsLegacy
+	url = https://github.com/Leuthil/CUE4Parse
+	branch = UEATSerializer
 [submodule "EpicManifestParser"]
 	path = EpicManifestParser
 	url = https://github.com/FModel/EpicManifestParser
